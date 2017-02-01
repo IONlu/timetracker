@@ -40,8 +40,19 @@
 
     computed: {
       timeText () {
-        var time = (this.data.stopTime || this.now.valueOf()) - this.data.startTime
-        return (Math.max(1, Math.ceil(time / (this.multipleOf * 1000 * 60))) * this.multipleOf) + ' min'
+        const time = (this.data.stopTime || this.now.valueOf()) - this.data.startTime
+        const totalMinutes = Math.max(1, Math.ceil(time / (this.multipleOf * 1000 * 60))) * this.multipleOf
+        const minutes = totalMinutes % 60
+        const hours = Math.ceil(totalMinutes / 60)
+
+        const pad = number => {
+          const numberText = number + ''
+          return numberText.length === 1
+            ? '0' + numberText
+            : numberText
+        }
+
+        return pad(hours) + ':' + pad(minutes)
       },
       hasStopButton () {
         return !this.data.stopTime
