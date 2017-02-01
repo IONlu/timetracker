@@ -1,0 +1,9 @@
+{
+  "name": "timetracker",
+  "version": "0.0.1",
+  "description": "Timetracker",
+  "main": "./dist/main.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "author": "Daniel Duton <daniel@duton.lu>"
+}
