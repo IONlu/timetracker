@@ -81,6 +81,9 @@
     },
     methods: {
       create () {
+        if (this.date !== moment().startOf('day').valueOf()) {
+          return
+        }
         this.$store.dispatch('createBreakpoint', {
           text: this.text
         })
