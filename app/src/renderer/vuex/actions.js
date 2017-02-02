@@ -1,7 +1,7 @@
 import * as types from './mutation-types'
 
 export const createBreakpoint = ({ commit, getters }, data) => {
-  if (!getters.currentBreakPoint.stopTime) {
+  if (getters.currentBreakPoint && !getters.currentBreakPoint.stopTime) {
     commit(types.STOP_BREAKPOINT, {
       breakpoint: getters.currentBreakPoint
     })
