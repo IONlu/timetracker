@@ -21,4 +21,10 @@
 
   $fa-font-path: "../../../node_modules/font-awesome/fonts";
   @import "../../../node_modules/font-awesome/scss/font-awesome";
+
+  html, body, #app {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+  }
 </style>

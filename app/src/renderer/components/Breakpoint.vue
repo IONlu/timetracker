@@ -10,9 +10,11 @@
 </template>
 
 <script>
-  import moment from 'moment'
+  import worktime from './mixins/worktime'
 
   export default {
+
+    mixins: [ worktime ],
 
     props: {
       data: {
@@ -21,38 +23,10 @@
       }
     },
 
-    data () {
-      return {
-        now: moment(),
-        multipleOf: 15
-      }
-    },
-
-    created () {
-      this.$timer = setInterval(() => {
-        this.now = moment()
-      }, 1000)
-    },
-
-    beforeDestroy () {
-      clearTimeout(this.$timer)
-    },
-
     computed: {
       timeText () {
-        const time = (this.data.stopTime || this.now.valueOf()) - this.data.startTime
-        const totalMinutes = Math.max(1, Math.ceil(time / (this.multipleOf * 1000 * 60))) * this.multipleOf
-        const minutes = totalMinutes % 60
-        const hours = Math.ceil(totalMinutes / 60)
-
-        const pad = number => {
-          const numberText = number + ''
-          return numberText.length === 1
-            ? '0' + numberText
-            : numberText
-        }
-
-        return pad(hours) + ':' + pad(minutes)
+        const workTime = this.workTime(this.data.startTime, this.data.stopTime)
+        return this.formatWorkTime(workTime)
       },
       hasStopButton () {
         return !this.data.stopTime
