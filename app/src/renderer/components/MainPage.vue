@@ -9,7 +9,7 @@
       <div class="date-selector">
         <div class="container-fluid">
           <span class="fa fa-chevron-circle-left previous" @click="previousDay"></span>
-          <span class="date">{{ formatDate(date) }}</span>
+          <span class="date">{{ dateText }}</span>
           <span class="fa fa-chevron-circle-right next" @click="nextDay"></span>
         </div>
       </div>
@@ -17,10 +17,10 @@
         <form @submit.prevent="create">
           <div class="row">
             <div class="col-8">
-              <input ref="textInput" type="text" class="form-control" v-model="text" :disabled="formActive == true ? false : true"/>
+              <input ref="textInput" type="text" class="form-control" v-model="text" :disabled="!formIsActive" />
             </div>
             <div class="col-4">
-              <button class="btn btn-primary btn-block" v-bind:class="{ disabled: !formActive }">Breakpoint</button>
+              <button class="btn btn-primary btn-block" :class="{ disabled: !formIsActive }">Breakpoint</button>
             </div>
           </div>
         </form>
@@ -60,15 +60,17 @@
     data () {
       return {
         text: '',
-        date: moment().startOf('day').valueOf(),
-        formActive: true
+        date: null
       }
+    },
+    created () {
+      this.date = this.today
     },
     computed: {
       breakpoints () {
-        var nextDay = moment(this.date).add(1, 'days').valueOf()
+        var nextDay = this.date.clone().add(1, 'days')
         return this.$store.getters.breakpoints
-          .filter(breakpoint => breakpoint.startTime >= this.date && breakpoint.startTime < nextDay)
+          .filter(breakpoint => moment(breakpoint.startTime).isBetween(this.date, nextDay, 'day', '[)'))
           .reverse()
       },
       total () {
@@ -78,11 +80,20 @@
       },
       totalText () {
         return this.formatWorkTime(this.total)
+      },
+      formIsActive () {
+        return this.todayIsSelected()
+      },
+      dateText () {
+        return this.date.format('dddd, MMMM Do YYYY')
+      },
+      today () {
+        return this.now.clone().startOf('day')
       }
     },
     methods: {
       create () {
-        if (this.date !== moment().startOf('day').valueOf()) {
+        if (!this.todayIsSelected) {
           return
         }
         this.$store.dispatch('createBreakpoint', {
@@ -91,9 +102,6 @@
         this.text = ''
         this.$refs.textInput.focus()
       },
-      formatDate (date) {
-        return moment(date).format('dddd, MMMM Do YYYY')
-      },
       stop (breakpoint) {
         this.$store.dispatch('stopBreakpoint', { breakpoint })
       },
@@ -101,15 +109,13 @@
         this.$store.dispatch('removeBreakpoint', { breakpoint })
       },
       todayIsSelected () {
-        return this.date === moment().startOf('day').valueOf()
+        return this.date.isSame(this.today, 'day')
       },
       previousDay () {
-        this.date = moment(this.date).add(-1, 'days').valueOf()
-        this.formActive = this.todayIsSelected()
+        this.date = this.date.clone().add(-1, 'days')
       },
       nextDay () {
-        this.date = moment(this.date).add(1, 'days').valueOf()
-        this.formActive = this.todayIsSelected()
+        this.date = this.date.clone().add(1, 'days')
       }
     }
   }
