@@ -17,10 +17,10 @@
         <form @submit.prevent="create">
           <div class="row">
             <div class="col-8">
-              <input ref="textInput" type="text" class="form-control" v-model="text" />
+              <input ref="textInput" type="text" class="form-control" v-model="text" :disabled="formActive == true ? false : true"/>
             </div>
             <div class="col-4">
-              <button class="btn btn-primary btn-block">Breakpoint</button>
+              <button class="btn btn-primary btn-block" v-bind:class="{ disabled: !formActive }">Breakpoint</button>
             </div>
           </div>
         </form>
@@ -60,7 +60,8 @@
     data () {
       return {
         text: '',
-        date: moment().startOf('day').valueOf()
+        date: moment().startOf('day').valueOf(),
+        formActive: true
       }
     },
     computed: {
@@ -81,6 +82,9 @@
     },
     methods: {
       create () {
+        if (this.date !== moment().startOf('day').valueOf()) {
+          return
+        }
         this.$store.dispatch('createBreakpoint', {
           text: this.text
         })
@@ -96,11 +100,16 @@
       remove (breakpoint) {
         this.$store.dispatch('removeBreakpoint', { breakpoint })
       },
+      todayIsSelected () {
+        return this.date === moment().startOf('day').valueOf()
+      },
       previousDay () {
         this.date = moment(this.date).add(-1, 'days').valueOf()
+        this.formActive = this.todayIsSelected()
       },
       nextDay () {
         this.date = moment(this.date).add(1, 'days').valueOf()
+        this.formActive = this.todayIsSelected()
       }
     }
   }
