@@ -129,7 +129,8 @@
     flex-direction: column;
 
     .middle {
-      flex-grow: 1
+      flex-grow: 1;
+      overflow: auto;
     }
   }
 
