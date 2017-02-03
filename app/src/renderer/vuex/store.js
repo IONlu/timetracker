@@ -6,38 +6,38 @@ import * as getters from './getters'
 import modules from './modules'
 
 import createPersistedState from 'vuex-persistedstate'
-import electron from 'electron'
+import { remote } from 'electron'
+const { app } = remote
 import fs from 'fs'
 
 Vue.use(Vuex)
 
-const dataFolder = electron.remote.app.getPath('appData') + '/timetracker'
-
-const path = key => {
-  return dataFolder + '/data.' + key + '.json'
+const getDataFolder = () => {
+  var folder = app.getPath('appData') + '/' + app.getName()
+  if (process.env.NODE_ENV !== 'production') {
+    folder += '-' + process.env.NODE_ENV
+  }
+  return folder
 }
+const getFilePath = key => getDataFolder() + '/data.' + key + '.json'
 
 export default new Vuex.Store({
   plugins: [
     createPersistedState({
       getState: (key) => {
-        if (path(key)) {
-          if (!fs.existsSync(dataFolder)) {
-            fs.mkdirSync(dataFolder)
-          }
-          if (!fs.existsSync(path(key))) {
-            fs.openSync(path(key), 'w')
-          }
-          return null
+        const dataFolder = getDataFolder()
+        if (!fs.existsSync(dataFolder)) {
+          fs.mkdirSync(dataFolder)
         }
+
         try {
-          return JSON.parse(fs.readFileSync(path(key)))
+          return JSON.parse(fs.readFileSync(getFilePath(key)))
         } catch (err) {
           return null
         }
       },
       setState: (key, state) => {
-        fs.writeFileSync(path(key), JSON.stringify(state))
+        fs.writeFileSync(getFilePath(key), JSON.stringify(state))
       }
     })
   ],
