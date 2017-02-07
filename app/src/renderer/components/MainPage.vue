@@ -21,16 +21,14 @@
       </form>
     </div>
     <div class="middle">
-      <div class="container-fluid">
-        <table class="table">
-          <breakpoint
-            v-for="breakpoint in breakpoints"
-            :data="breakpoint"
-            @stop="stop(breakpoint)"
-            @remove="remove(breakpoint)"
-          ></breakpoint>
-        </table>
-      </div>
+      <table class="table">
+        <breakpoint
+          v-for="breakpoint in breakpoints"
+          :data="breakpoint"
+          @stop="stop(breakpoint)"
+          @remove="remove(breakpoint)"
+        ></breakpoint>
+      </table>
     </div>
     <div class="bottom">
       <footer>
@@ -154,7 +152,7 @@
 
   header {
     padding: 1em 0;
-    background-color: #3f51b5;
+    background-color: #303f9f;
 
     h1 {
       text-align: center;
@@ -165,16 +163,12 @@
   }
 
   footer {
-    background-color: #e8eaf6;
+    background-color: $gray-lighter;
     padding: 0.5em 0;
   }
 
-  .btn-primary {
-    background-color: #3f51b5;
-  }
-
   .date-selector {
-    background-color: #e8eaf6;
+    background-color: $gray-lighter;
     padding: 0.5em 0;
 
     .container-fluid {
@@ -184,7 +178,7 @@
 
       .next, .previous {
         font-size: 2em;
-        color: #3f51b5;
+        color:  $gray-light;
         cursor: pointer;
       }
     }

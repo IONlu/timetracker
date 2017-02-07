@@ -1,17 +1,19 @@
 <template>
-  <tr>
+  <tr :class="mainClasses">
     <td class="time">
-      <div class="billingTime">
-        {{ timeText }}
-      </div>
-      <div class="realTime">
-        {{ startText }}-{{ stopText }}
+      <div>
+        <div class="billingTime">
+          {{ timeText }}
+        </div>
+        <div class="realTime">
+          {{ startText }}-{{ stopText }}
+        </div>
       </div>
     </td>
     <td class="text">{{ data.text }}</td>
-    <td>
-      <span v-if="hasStopButton" class="action fa fa-stop" @click="stop"></span>
-      <span v-if="hasDeleteButton" class="action fa fa-trash-o" @click="remove"></span>
+    <td class="action">
+      <span v-if="isActive" class="fa fa-stop-circle" @click="stop"></span>
+      <span v-if="!isActive" class="fa fa-trash-o" @click="remove"></span>
     </td>
   </tr>
 </template>
@@ -36,17 +38,19 @@
         const workTime = this.workTime(this.data.startTime, this.data.stopTime)
         return this.formatWorkTime(workTime)
       },
-      hasStopButton () {
-        return !this.data.stopTime
-      },
-      hasDeleteButton () {
-        return !this.hasStopButton
-      },
       startText () {
         return moment(this.data.startTime).format('HH:mm')
       },
       stopText () {
         return moment(this.data.stopTime || this.now.valueOf()).format('HH:mm')
+      },
+      isActive () {
+        return !this.data.stopTime
+      },
+      mainClasses () {
+        return {
+          active: this.isActive
+        }
       }
     },
 
@@ -62,28 +66,51 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "../../../../node_modules/bootstrap/scss/variables";
+  $spacing: $grid-gutter-width-base / 2;
+
   td {
     white-space: nowrap;
+    vertical-align: middle;
   }
+
   td.text {
     width: 100%;
   }
+
   td.time {
-    padding: 4px 12px;
+    background-color: $gray-light;
+    color: #FFFFFF;
+    vertical-align: middle;
+
+    height: 5em;
+    padding: 0 $spacing;
+    text-align: center;
   }
+
+  .active td.time {
+    background-color: #4caf50;
+  }
+
   .action {
-    cursor: pointer;
+    span {
+      cursor: pointer;
+      font-size: 2em;
+    }
+
+    .fa-stop-circle {
+      color: #900;
+    }
   }
-  .action.fa-stop {
-    color: #900;
-  }
+
   .billingTime {
-    font-size: 1.4em
+    font-size: 1.5em;
+    font-weight: bold;
   }
+
   .realTime {
-    margin-top: -0.4em;
-    color: rgba(0,0,0,0.7);
-    font-size: 0.6em;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.7em;
   }
 </style>
