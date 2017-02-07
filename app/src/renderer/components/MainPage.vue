@@ -13,18 +13,12 @@
           <span class="fa fa-chevron-circle-right next" @click="nextDay"></span>
         </div>
       </div>
-      <div class="container-fluid">
-        <form @submit.prevent="create">
-          <div class="row">
-            <div class="col-8">
-              <input ref="textInput" type="text" class="form-control" v-model="text" :disabled="!formIsActive" />
-            </div>
-            <div class="col-4">
-              <button class="btn btn-primary btn-block" :class="{ disabled: !formIsActive }">Breakpoint</button>
-            </div>
-          </div>
-        </form>
-      </div>
+      <form @submit.prevent="create" class="new-breakpoint-form">
+        <input ref="textInput" type="text" class="form-control" v-model="text" :disabled="!formIsActive" />
+        <button type="submit" class="submit-button">
+          <span class="fa fa-plus-circle"></span>
+        </button>
+      </form>
     </div>
     <div class="middle">
       <div class="container-fluid">
@@ -122,6 +116,9 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "../../../../node_modules/bootstrap/scss/variables";
+  $spacing: $grid-gutter-width-base / 2;
+
   .main-page {
     height: 100%;
     max-height: 100%;
@@ -131,6 +128,27 @@
     .middle {
       flex-grow: 1;
       overflow: auto;
+    }
+  }
+
+  .new-breakpoint-form {
+    display: flex;
+
+    input {
+      flex-grow: 1;
+      margin: 0 0 0 $spacing;
+    }
+
+    .submit-button {
+      border: 0;
+      background: none;
+      padding: 0 $spacing;
+      margin: 0;
+
+      .fa {
+        font-size: 2em;
+        color: #4caf50;
+      }
     }
   }
 
