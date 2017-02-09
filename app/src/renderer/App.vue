@@ -13,6 +13,10 @@
   import VueRouter from 'vue-router'
   import routes from './routes'
   import store from 'renderer/vuex/store'
+  import menu from './menu'
+  import { remote } from 'electron'
+
+  remote.Menu.setApplicationMenu(menu)
 
   const router = new VueRouter({ routes })
 
