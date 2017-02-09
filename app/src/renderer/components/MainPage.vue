@@ -1,11 +1,6 @@
 <template>
   <div class="main-page">
     <div class="top">
-      <header>
-        <div class="container-fluid">
-          <h1>Time Tracker</h1>
-        </div>
-      </header>
       <div class="date-selector">
         <div class="container-fluid">
           <span class="fa fa-chevron-circle-left previous" @click="previousDay"></span>
@@ -155,18 +150,6 @@
       .submit-button {
         @include circle-button(#4caf50);
       }
-    }
-  }
-
-  header {
-    padding: 1em 0;
-    background-color: #303f9f;
-
-    h1 {
-      text-align: center;
-      font-size: 2em;
-      margin: 0px;
-      color: #FFFFFF;
     }
   }
 
