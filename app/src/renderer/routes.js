@@ -1,9 +1,9 @@
-import MainPage from 'components/MainPage'
+import ListPage from 'components/ListPage'
 
 export default [
   {
     path: '/list',
-    component: MainPage
+    component: ListPage
   },
   {
     path: '*',
