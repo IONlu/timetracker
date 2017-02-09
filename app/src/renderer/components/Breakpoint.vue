@@ -10,7 +10,21 @@
         </div>
       </div>
     </td>
-    <td class="text">{{ data.text }}</td>
+    <td class="text">
+      <input
+        v-if="isEditText"
+        class="form-control"
+        :value="data.text"
+        ref="editTextInput"
+        @blur="closeEditText"
+        @keyup.enter="closeEditText"
+        @input="updateText($event.target.value)"
+      />
+      <div
+        v-else
+        @click="editText"
+      >{{ data.text }}</div>
+    </td>
     <td class="action">
       <button v-if="isActive" @click="stop" class="stop-action">
         <span class="fa fa-stop"></span>
@@ -34,6 +48,12 @@
       data: {
         type: Object,
         required: true
+      }
+    },
+
+    data () {
+      return {
+        isEditText: false
       }
     },
 
@@ -64,6 +84,18 @@
       },
       remove () {
         this.$emit('remove')
+      },
+      editText () {
+        this.isEditText = true
+        this.$nextTick(() => {
+          this.$refs.editTextInput.focus()
+        })
+      },
+      closeEditText () {
+        this.isEditText = false
+      },
+      updateText (value) {
+        this.$emit('updateText', value)
       }
     }
 

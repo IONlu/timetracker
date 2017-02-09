@@ -14,7 +14,9 @@
         </div>
       </div>
       <form @submit.prevent="create" class="new-breakpoint-form">
-        <input ref="textInput" type="text" class="form-control" v-model="text" :disabled="!formIsActive" />
+        <div class="input-container">
+          <input ref="textInput" type="text" class="form-control" v-model="text" :disabled="!formIsActive" />
+        </div>
         <div class="submit-button-container">
           <button type="submit" class="submit-button">
             <span class="fa fa-plus"></span>
@@ -29,6 +31,7 @@
           :data="breakpoint"
           @stop="stop(breakpoint)"
           @remove="remove(breakpoint)"
+          @updateText="updateText(breakpoint, $event)"
         ></breakpoint>
       </table>
     </div>
@@ -110,6 +113,9 @@
       },
       nextDay () {
         this.date = this.date.clone().add(1, 'days')
+      },
+      updateText (breakpoint, text) {
+        this.$store.dispatch('updateBreakpointText', { breakpoint, text })
       }
     }
   }
@@ -134,9 +140,13 @@
   .new-breakpoint-form {
     display: flex;
 
-    input {
+    .input-container {
       flex-grow: 1;
       margin: 0 0 0 $spacing;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .submit-button-container {

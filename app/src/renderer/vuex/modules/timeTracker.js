@@ -31,6 +31,9 @@ const mutations = {
       return
     }
     state.breakpoints.splice(index, 1)
+  },
+  [types.UPDATE_BREAKPOINT_TEXT] (state, data) {
+    data.breakpoint.text = data.text
   }
 }
 

@@ -28,3 +28,13 @@ export const removeBreakpoint = ({ commit }, data) => {
     breakpoint: data.breakpoint
   })
 }
+
+export const updateBreakpointText = ({ commit }, data) => {
+  if (!data.breakpoint) {
+    return
+  }
+  commit(types.UPDATE_BREAKPOINT_TEXT, {
+    breakpoint: data.breakpoint,
+    text: data.text || ''
+  })
+}
