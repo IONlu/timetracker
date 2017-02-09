@@ -12,8 +12,12 @@
     </td>
     <td class="text">{{ data.text }}</td>
     <td class="action">
-      <span v-if="isActive" class="fa fa-stop-circle" @click="stop"></span>
-      <span v-if="!isActive" class="fa fa-trash-o" @click="remove"></span>
+      <button v-if="isActive" @click="stop" class="stop-action">
+        <span class="fa fa-stop"></span>
+      </button>
+      <button v-else @click="remove" class="remove-action">
+        <span class="fa fa-trash"></span>
+      </button>
     </td>
   </tr>
 </template>
@@ -67,8 +71,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../node_modules/bootstrap/scss/variables";
-  $spacing: $grid-gutter-width-base / 2;
+  @import "../../../scss/variables";
+  @import "../../../scss/buttons";
 
   td {
     white-space: nowrap;
@@ -89,18 +93,23 @@
     text-align: center;
   }
 
+  td.action {
+    vertical-align: middle;
+    padding: 0 $spacing;
+    text-align: center;
+  }
+
   .active td.time {
     background-color: #4caf50;
   }
 
   .action {
-    span {
-      cursor: pointer;
-      font-size: 2em;
+    .remove-action {
+      @include circle-button($gray-light);
     }
 
-    .fa-stop-circle {
-      color: #900;
+    .stop-action {
+      @include circle-button(#900);
     }
   }
 

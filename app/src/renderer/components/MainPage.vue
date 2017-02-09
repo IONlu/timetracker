@@ -15,9 +15,11 @@
       </div>
       <form @submit.prevent="create" class="new-breakpoint-form">
         <input ref="textInput" type="text" class="form-control" v-model="text" :disabled="!formIsActive" />
-        <button type="submit" class="submit-button">
-          <span class="fa fa-plus-circle"></span>
-        </button>
+        <div class="submit-button-container">
+          <button type="submit" class="submit-button">
+            <span class="fa fa-plus"></span>
+          </button>
+        </div>
       </form>
     </div>
     <div class="middle">
@@ -114,8 +116,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../node_modules/bootstrap/scss/variables";
-  $spacing: $grid-gutter-width-base / 2;
+  @import "../../../scss/variables";
+  @import "../../../scss/buttons";
 
   .main-page {
     height: 100%;
@@ -137,15 +139,11 @@
       margin: 0 0 0 $spacing;
     }
 
-    .submit-button {
-      border: 0;
-      background: none;
-      padding: 0 $spacing;
-      margin: 0;
+    .submit-button-container {
+      margin: 0 $spacing;
 
-      .fa {
-        font-size: 2em;
-        color: #4caf50;
+      .submit-button {
+        @include circle-button(#4caf50);
       }
     }
   }
