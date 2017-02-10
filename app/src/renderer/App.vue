@@ -40,7 +40,6 @@
     margin: 0;
   }
 
-
   #app {
     height: 100%;
     max-height: 100%;
