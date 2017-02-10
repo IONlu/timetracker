@@ -53,6 +53,11 @@
             label: 'Wisol Password',
             name: 'wisolPassword',
             type: 'password'
+          },
+          {
+            label: 'Wisol Vendeur',
+            name: 'wisolVendeur',
+            type: 'text'
           }
         ]
       }

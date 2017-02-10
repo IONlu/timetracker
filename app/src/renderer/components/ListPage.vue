@@ -34,6 +34,9 @@
       <footer>
         <div class="container-fluid">
           Total: {{ totalText }}
+          <button class="btn btn-primary btn-sm" @click="upload">
+            Upload
+          </button>
         </div>
       </footer>
     </div>
@@ -44,6 +47,7 @@
   import Breakpoint from './Breakpoint'
   import moment from 'moment'
   import worktime from './mixins/worktime'
+  import { upload } from '../wisol'
 
   export default {
     name: 'main-page',
@@ -111,6 +115,11 @@
       },
       updateText (breakpoint, text) {
         this.$store.dispatch('updateBreakpointText', { breakpoint, text })
+      },
+      upload () {
+        this.breakpoints.forEach(breakpoint => {
+          upload(breakpoint.text, this.workTime(breakpoint.startTime, breakpoint.stopTime))
+        })
       }
     }
   }
