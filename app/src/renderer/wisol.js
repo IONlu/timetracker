@@ -1,5 +1,6 @@
 import axios from 'axios'
 import store from './vuex/store'
+import moment from 'moment'
 
 export const APPLICATION_KEY = 'b8ff874e-ffe9-4338-9991-e73f58f73e66'
 
@@ -25,12 +26,13 @@ const getAuth = () => {
   }
 }
 
-export const upload = (text, time) => {
+export const upload = (startTime, workTime, text) => {
   return axios.post(getEndpoint(), {
     client: '0000000000',
     designation: text,
-    qte_totale: time / (1000 * 60 * 60),
-    vendeur: store.getters.setting('wisolVendeur')
+    qte_totale: workTime / (1000 * 60 * 60),
+    vendeur: store.getters.setting('wisolVendeur'),
+    date_prestation: moment(startTime).format('YYYY-MM-DD')
   }, {
     ...getAuth(),
     ...getHeaders()

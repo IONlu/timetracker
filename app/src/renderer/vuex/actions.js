@@ -49,7 +49,7 @@ export const uploadBreakpoint = ({ commit }, data) => {
     breakpoint: data.breakpoint,
     status: 'pending'
   })
-  return upload(data.breakpoint.text, data.workTime || 0)
+  return upload(data.breakpoint.startTime, data.workTime || 0, data.breakpoint.text)
     .then(() => {
       commit(types.UPDATE_UPLOAD_STATUS, {
         breakpoint: data.breakpoint,
