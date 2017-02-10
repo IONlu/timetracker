@@ -4,7 +4,12 @@
       <div class="form-group row" v-for="field in fields">
         <label class="col-sm-4 col-form-label">{{ field.label }}</label>
         <div class="col-sm-8">
-          <input :type="field.type" class="form-control" />
+          <input
+            :type="field.type"
+            class="form-control"
+            :value="setting(field.name)"
+            @input="updateSetting(field.name, $event.target.value)"
+          />
         </div>
       </div>
     </div>
@@ -50,6 +55,16 @@
             type: 'password'
           }
         ]
+      }
+    },
+
+    methods: {
+      setting (name) {
+        return this.$store.getters.setting(name)
+      },
+
+      updateSetting (name, value) {
+        this.$store.dispatch('updateSetting', { name, value })
       }
     }
   }

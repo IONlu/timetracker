@@ -4,8 +4,7 @@ export default {
 
   data () {
     return {
-      now: moment(),
-      multipleOf: 15
+      now: moment()
     }
   },
 
@@ -22,7 +21,8 @@ export default {
   methods: {
     workTime (from, to) {
       const time = (to || this.now.valueOf()) - from
-      return Math.max(1, Math.ceil(time / (this.multipleOf * 1000 * 60))) * this.multipleOf * 1000 * 60
+      const timePrecision = this.setting('timePrecision') || 15
+      return Math.max(1, Math.ceil(time / (timePrecision * 1000 * 60))) * timePrecision * 1000 * 60
     },
 
     formatWorkTime (time) {
@@ -38,6 +38,10 @@ export default {
       }
 
       return pad(hours) + ':' + pad(minutes)
+    },
+
+    setting (name) {
+      return this.$store.getters.setting(name)
     }
   }
 }
