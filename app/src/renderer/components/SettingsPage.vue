@@ -28,6 +28,26 @@
             label: 'Time Precision',
             name: 'timePrecision',
             type: 'number'
+          },
+          {
+            label: 'Wisol Server Url',
+            name: 'wisolServerUrl',
+            type: 'text'
+          },
+          {
+            label: 'Wisol Device Key',
+            name: 'wisolDeviceKey',
+            type: 'text'
+          },
+          {
+            label: 'Wisol Username',
+            name: 'wisolUsername',
+            type: 'text'
+          },
+          {
+            label: 'Wisol Password',
+            name: 'wisolPassword',
+            type: 'password'
           }
         ]
       }
