@@ -3,6 +3,11 @@
     <header>
       <div class="container-fluid">
         <h1>Time Tracker</h1>
+        <div class="page-icons">
+          <a :href="pageIcon.href" v-for="pageIcon in pageIconsToShow">
+            <span :class="pageIcon.iconClasses"></span>
+          </a>
+        </div>
       </div>
     </header>
     <div class="app-content">
@@ -24,7 +29,32 @@
 
   export default {
     router,
-    store
+    store,
+
+    data () {
+      return {
+        pageIcons: [
+          {
+            href: '#/list',
+            iconClasses: [ 'fa', 'fa-list' ],
+            routes: [ 'settings' ]
+          },
+          {
+            href: '#/settings',
+            iconClasses: [ 'fa', 'fa-wrench' ],
+            routes: [ 'list' ]
+          }
+        ]
+      }
+    },
+
+    computed: {
+      pageIconsToShow () {
+        return this.pageIcons.filter(pageIcon => {
+          return pageIcon.routes.indexOf(this.$route.name) > -1
+        })
+      }
+    }
   }
 </script>
 
@@ -47,14 +77,24 @@
     flex-direction: column;
 
     header {
-      padding: 1em 0;
+      padding: 0.5em 0;
       background-color: #303f9f;
+      color: #FFFFFF;
+      font-size: 2em;
 
-      h1 {
-        text-align: center;
-        font-size: 2em;
-        margin: 0px;
-        color: #FFFFFF;
+      .container-fluid {
+        display: flex;
+        justify-content: space-between;
+
+        h1 {
+          margin: 0px;
+        }
+
+        .page-icons {
+          a {
+            color: #FFFFFF;
+          }
+        }
       }
     }
 
