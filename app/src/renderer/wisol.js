@@ -29,7 +29,7 @@ const getAuth = () => {
 export const upload = (startTime, workTime, text) => {
   return axios.post(getEndpoint(), {
     client: '0000000000',
-    designation: text,
+    commentaire: text,
     qte_totale: workTime / (1000 * 60 * 60),
     vendeur: store.getters.setting('wisolVendeur'),
     date_prestation: moment(startTime).format('YYYY-MM-DD')
