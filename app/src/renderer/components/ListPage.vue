@@ -47,7 +47,6 @@
   import Breakpoint from './Breakpoint'
   import moment from 'moment'
   import worktime from './mixins/worktime'
-  import { upload } from '../wisol'
 
   export default {
     name: 'main-page',
@@ -118,7 +117,15 @@
       },
       upload () {
         this.breakpoints.forEach(breakpoint => {
-          upload(breakpoint.text, this.workTime(breakpoint.startTime, breakpoint.stopTime))
+          if (!breakpoint.stopTime ||
+              breakpoint.uploadStatus === 'pending' ||
+              breakpoint.uploadStatus === 'success') {
+            return
+          }
+          this.$store.dispatch('uploadBreakpoint', {
+            breakpoint,
+            workTime: this.workTime(breakpoint.startTime, breakpoint.stopTime)
+          })
         })
       }
     }

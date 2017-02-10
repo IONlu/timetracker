@@ -26,12 +26,16 @@
       >{{ data.text }}</div>
     </td>
     <td class="action">
-      <button v-if="isActive" @click="stop" class="stop-action">
-        <span class="fa fa-stop"></span>
-      </button>
-      <button v-else @click="remove" class="remove-action">
-        <span class="fa fa-trash"></span>
-      </button>
+      <span v-if="data.uploadStatus == 'success'" class="uploadStatus fa fa-check fa-2x"></span>
+      <span v-if="data.uploadStatus == 'pending'" class="uploadStatus fa fa-spinner fa-pulse fa-2x fa-fw"></span>
+      <template v-if="!isLocked">
+        <button v-if="isActive" @click="stop" class="stop-action">
+          <span class="fa fa-stop"></span>
+        </button>
+        <button v-else @click="remove" class="remove-action">
+          <span class="fa fa-trash"></span>
+        </button>
+      </template>
     </td>
   </tr>
 </template>
@@ -71,6 +75,9 @@
       isActive () {
         return !this.data.stopTime
       },
+      isLocked () {
+        return this.data.uploadStatus === 'pending' || this.data.uploadStatus === 'success'
+      },
       mainClasses () {
         return {
           active: this.isActive
@@ -83,9 +90,15 @@
         this.$emit('stop')
       },
       remove () {
+        if (this.isLocked) {
+          return
+        }
         this.$emit('remove')
       },
       editText () {
+        if (this.isLocked) {
+          return
+        }
         this.isEditText = true
         this.$nextTick(() => {
           this.$refs.editTextInput.focus()

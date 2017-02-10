@@ -1,4 +1,5 @@
 import * as types from './mutation-types'
+import { upload } from '../wisol'
 
 // timeTracker
 export const createBreakpoint = ({ commit, getters }, data) => {
@@ -38,6 +39,29 @@ export const updateBreakpointText = ({ commit }, data) => {
     breakpoint: data.breakpoint,
     text: data.text || ''
   })
+}
+
+export const uploadBreakpoint = ({ commit }, data) => {
+  if (!data.breakpoint) {
+    return
+  }
+  commit(types.UPDATE_UPLOAD_STATUS, {
+    breakpoint: data.breakpoint,
+    status: 'pending'
+  })
+  return upload(data.breakpoint.text, data.workTime || 0)
+    .then(() => {
+      commit(types.UPDATE_UPLOAD_STATUS, {
+        breakpoint: data.breakpoint,
+        status: 'success'
+      })
+    })
+    .catch(() => {
+      commit(types.UPDATE_UPLOAD_STATUS, {
+        breakpoint: data.breakpoint,
+        status: null
+      })
+    })
 }
 
 // settings

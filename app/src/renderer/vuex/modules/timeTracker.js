@@ -6,23 +6,14 @@ const state = {
 
 const mutations = {
   [types.STOP_BREAKPOINT] (state, data) {
-    const index = state.breakpoints.indexOf(data.breakpoint)
-    if (index < 0) {
-      return
-    }
-    state.breakpoints = [
-      ...state.breakpoints.slice(0, index),
-      {
-        ...data.breakpoint,
-        stopTime: Date.now()
-      },
-      ...state.breakpoints.slice(index + 1)
-    ]
+    data.breakpoint.stopTime = Date.now()
   },
   [types.CREATE_BREAKPOINT] (state, data) {
     state.breakpoints.push({
       startTime: Date.now(),
-      text: data.text
+      stopTime: null,
+      text: data.text,
+      uploadStatus: null
     })
   },
   [types.REMOVE_BREAKPOINT] (state, data) {
@@ -34,6 +25,9 @@ const mutations = {
   },
   [types.UPDATE_BREAKPOINT_TEXT] (state, data) {
     data.breakpoint.text = data.text
+  },
+  [types.UPDATE_UPLOAD_STATUS] (state, data) {
+    data.breakpoint.uploadStatus = data.status || null
   }
 }
 
