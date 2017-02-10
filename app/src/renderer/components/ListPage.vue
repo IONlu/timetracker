@@ -1,5 +1,5 @@
 <template>
-  <div class="main-page">
+  <div class="list-page">
     <div class="top">
       <div class="date-selector">
         <div class="container-fluid">
@@ -120,7 +120,7 @@
   @import "../../../scss/variables";
   @import "../../../scss/buttons";
 
-  .main-page {
+  .list-page {
     height: 100%;
     max-height: 100%;
     display: flex;

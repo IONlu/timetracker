@@ -5,7 +5,9 @@
         <h1>Time Tracker</h1>
       </div>
     </header>
-    <router-view></router-view>
+    <div class="app-content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -38,15 +40,29 @@
     margin: 0;
   }
 
-  header {
-    padding: 1em 0;
-    background-color: #303f9f;
 
-    h1 {
-      text-align: center;
-      font-size: 2em;
-      margin: 0px;
-      color: #FFFFFF;
+  #app {
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    header {
+      padding: 1em 0;
+      background-color: #303f9f;
+
+      h1 {
+        text-align: center;
+        font-size: 2em;
+        margin: 0px;
+        color: #FFFFFF;
+      }
+    }
+
+    .app-content {
+      flex-grow: 1;
+      overflow: auto;
+      height: 100%;
     }
   }
 </style>
