@@ -120,7 +120,6 @@
   @import "../../../scss/buttons";
 
   td {
-    white-space: nowrap;
     vertical-align: middle;
   }
 
