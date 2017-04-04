@@ -12,6 +12,10 @@ router.get('/add/:text', ctx => {
   ctx.body = ctx.params
 })
 
+router.get('/all', ctx => {
+  ctx.body = store.state.timeTracker.breakpoints
+})
+
 app
   .use(router.routes())
   .use(router.allowedMethods())
