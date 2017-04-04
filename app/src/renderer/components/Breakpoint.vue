@@ -1,6 +1,6 @@
 <template>
   <tr :class="mainClasses">
-    <td class="time">
+    <td class="time" @click="editTime">
       <div>
         <div class="billingTime">
           {{ timeText }}
@@ -9,6 +9,12 @@
           {{ startText }}-{{ stopText }}
         </div>
       </div>
+      <time-edit
+        v-if="isEditTime"
+        @close="closeEditTime"
+        @save="updateTime"
+        :data="data"
+      ></time-edit>
     </td>
     <td class="text">
       <input
@@ -41,12 +47,15 @@
 </template>
 
 <script>
+  import TimeEdit from './TimeEdit'
   import worktime from './mixins/worktime'
   import moment from 'moment'
 
   export default {
 
     mixins: [ worktime ],
+
+    components: { TimeEdit },
 
     props: {
       data: {
@@ -57,7 +66,8 @@
 
     data () {
       return {
-        isEditText: false
+        isEditText: false,
+        isEditTime: false
       }
     },
 
@@ -109,6 +119,18 @@
       },
       updateText (value) {
         this.$emit('updateText', value)
+      },
+      editTime () {
+        if (this.isLocked || this.isActive) {
+          return
+        }
+        this.isEditTime = true
+      },
+      closeEditTime () {
+        this.isEditTime = false
+      },
+      updateTime (value) {
+        this.$emit('updateTime', value)
       }
     }
 
@@ -143,8 +165,12 @@
     text-align: center;
   }
 
-  .active td.time {
+  tr.active > td.time {
     background-color: #4caf50;
+  }
+
+  tr:not(.active) > td.time {
+    cursor: pointer;
   }
 
   .action {

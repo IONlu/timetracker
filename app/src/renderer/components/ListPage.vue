@@ -27,6 +27,7 @@
           @stop="stop(breakpoint)"
           @remove="remove(breakpoint)"
           @updateText="updateText(breakpoint, $event)"
+          @updateTime="updateTime(breakpoint, $event)"
           key="index"
         ></breakpoint>
       </table>
@@ -115,6 +116,13 @@
       },
       updateText (breakpoint, text) {
         this.$store.dispatch('updateBreakpointText', { breakpoint, text })
+      },
+      updateTime (breakpoint, value) {
+        this.$store.dispatch('setBreakpointTime', {
+          breakpoint,
+          startTime: value[0].getTime(),
+          stopTime: value[1].getTime()
+        })
       },
       upload () {
         this.breakpoints.forEach(breakpoint => {
