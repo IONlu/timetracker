@@ -1,14 +1,10 @@
 {
-  "name": "timetracker-electron",
+  "name": "timetracker",
   "version": "0.0.1",
-  "description": "Timetracker Electron Container",
+  "description": "Timetracker",
   "scripts": {
-    "build": "node tasks/release.js",
-    "build:clean": "cross-env PLATFORM_TARGET=clean node tasks/release.js",
-    "build:darwin": "cross-env PLATFORM_TARGET=darwin node tasks/release.js",
-    "build:linux": "cross-env PLATFORM_TARGET=linux node tasks/release.js",
-    "build:mas": "cross-env PLATFORM_TARGET=mas node tasks/release.js",
-    "build:win32": "cross-env PLATFORM_TARGET=win32 node tasks/release.js",
+    "build": "npm run pack && build",
+    "build:dir": "npm run pack && build --dir",
     "dev": "node tasks/runner.js",
     "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter app",
     "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix app",
@@ -16,6 +12,41 @@
     "pack:main": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack.renderer.config.js",
     "postinstall": "npm run lint:fix && cd app && npm install"
+  },
+  "build": {
+    "productName": "ElectronVue",
+    "appId": "lu.ion.timetracker",
+    "dmg": {
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    },
+    "files": [
+      "dist/",
+      "node_modules/",
+      "package.json"
+    ],
+    "mac": {
+      "icon": "app/icons/icon.icns"
+    },
+    "win": {
+      "icon": "app/icons/icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ]
+    }
   },
   "author": "Daniel Duton <daniel@duton.lu>",
   "license": "MIT",
@@ -35,7 +66,7 @@
     "electron": "^1.6.2",
     "electron-debug": "^1.1.0",
     "electron-devtools-installer": "^2.1.0",
-    "electron-packager": "^8.6.0",
+    "electron-builder": "^16.6.1",
     "electron-rebuild": "^1.5.7",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^7.1.0",
