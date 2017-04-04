@@ -60,10 +60,10 @@
 
 <style lang="scss">
   @import "../../scss/variables";
-  @import "../../../node_modules/bootstrap/scss/bootstrap";
+  @import "../../node_modules/bootstrap/scss/bootstrap";
 
-  $fa-font-path: "../../../node_modules/font-awesome/fonts";
-  @import "../../../node_modules/font-awesome/scss/font-awesome";
+  $fa-font-path: "../../node_modules/font-awesome/fonts";
+  @import "../../node_modules/font-awesome/scss/font-awesome";
 
   html, body, #app {
     height: 100%;

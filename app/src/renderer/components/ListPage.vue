@@ -22,11 +22,12 @@
     <div class="middle">
       <table class="table">
         <breakpoint
-          v-for="breakpoint in breakpoints"
+          v-for="(breakpoint, index) in breakpoints"
           :data="breakpoint"
           @stop="stop(breakpoint)"
           @remove="remove(breakpoint)"
           @updateText="updateText(breakpoint, $event)"
+          key="index"
         ></breakpoint>
       </table>
     </div>
