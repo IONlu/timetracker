@@ -117,11 +117,10 @@
       updateText (breakpoint, text) {
         this.$store.dispatch('updateBreakpointText', { breakpoint, text })
       },
-      updateTime (breakpoint, value) {
+      updateTime (breakpoint, data) {
         this.$store.dispatch('setBreakpointTime', {
           breakpoint,
-          startTime: value[0].getTime(),
-          stopTime: value[1].getTime()
+          ...data
         })
       },
       upload () {

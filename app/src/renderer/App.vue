@@ -22,7 +22,6 @@
   import store from 'renderer/vuex/store'
   import menu from './menu'
   import { remote } from 'electron'
-  import 'element-ui/lib/theme-default/index.css'
 
   remote.Menu.setApplicationMenu(menu)
 

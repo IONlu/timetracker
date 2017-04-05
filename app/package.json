@@ -6,7 +6,6 @@
   "dependencies": {
     "axios": "^0.16.0",
     "bootstrap": "^4.0.0-alpha.6",
-    "element-ui": "^1.2.7",
     "font-awesome": "^4.7.0",
     "koa": "^2.2.0",
     "koa-router": "^7.1.1",

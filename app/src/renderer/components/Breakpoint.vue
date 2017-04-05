@@ -13,7 +13,8 @@
         v-if="isEditTime"
         @close="closeEditTime"
         @save="updateTime"
-        :data="data"
+        :startTime="data.startTime"
+        :stopTime="data.stopTime"
       ></time-edit>
     </td>
     <td class="text">
@@ -121,7 +122,7 @@
         this.$emit('updateText', value)
       },
       editTime () {
-        if (this.isLocked || this.isActive) {
+        if (this.isLocked) {
           return
         }
         this.isEditTime = true
@@ -130,6 +131,7 @@
         this.isEditTime = false
       },
       updateTime (value) {
+        this.closeEditTime()
         this.$emit('updateTime', value)
       }
     }
@@ -157,6 +159,8 @@
     height: 5em;
     padding: 0 $spacing;
     text-align: center;
+
+    cursor: pointer;
   }
 
   td.action {
@@ -167,10 +171,6 @@
 
   tr.active > td.time {
     background-color: #4caf50;
-  }
-
-  tr:not(.active) > td.time {
-    cursor: pointer;
   }
 
   .action {

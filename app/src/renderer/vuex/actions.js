@@ -14,7 +14,7 @@ export const createBreakpoint = ({ commit, getters }, data) => {
 }
 
 export const setBreakpointTime = ({ commit, getters }, data) => {
-  if (!data.breakpoint || data.startTime >= data.stopTime) {
+  if (!data.breakpoint || (data.stopTime && data.startTime >= data.stopTime)) {
     return
   }
   commit(types.SET_BREAKPOINT_START_TIME, {

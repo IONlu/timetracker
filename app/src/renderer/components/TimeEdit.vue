@@ -3,14 +3,17 @@
     <div class="card">
       <div class="card-block">
         <p>
-          <el-time-picker
-            is-range
-            v-model="value"
-            placeholder="Pick a time range"
-            format="HH:mm"
-            :clearable="false"
-          >
-          </el-time-picker>
+          <input
+            class="form-control"
+            v-model="startTimeString"
+            placeholder="Start Time"
+          />
+          <input
+            class="form-control"
+            v-model="stopTimeString"
+            placeholder="Stop Time"
+            :disabled="!stopTime"
+          />
         </p>
         <button class="btn btn-primary" @click="save">Save</button>
       </div>
@@ -19,32 +22,68 @@
 </template>
 
 <script>
+  import moment from 'moment'
+
   export default {
 
     data () {
       return {
-        value: null
+        startTimeString: null,
+        stopTimeString: null
       }
     },
 
     props: {
-      data: {
-        type: Object,
+      startTime: {
+        type: Number,
         required: true
+      },
+      stopTime: {
+        type: Number
       }
     },
 
     created () {
-      this.value = []
-      this.value.push(new Date(this.data.startTime))
-      if (this.data.stopTime) {
-        this.value.push(new Date(this.data.stopTime))
+      this.startTimeString = moment(this.startTime).format('HH:mm')
+      if (this.stopTime) {
+        this.stopTimeString = moment(this.stopTime).format('HH:mm')
+      } else {
+        this.stopTimeString = null
+      }
+    },
+
+    computed: {
+      pickerOptions () {
+        return {
+          step: '00:01'
+        }
       }
     },
 
     methods: {
       save () {
-        this.$emit('save', this.value)
+        if (!this.startTimeString.match(/^[0-9]{2}:[0-9]{2}$/) ||
+          (this.stopTime && !this.stopTimeString.match(/^[0-9]{2}:[0-9]{2}$/))) {
+          return
+        }
+
+        var startDate = moment(this.startTime).startOf('day')
+        var startTime = this.startTimeString.split(':')
+        startDate.add(startTime[0], 'hours')
+        startDate.add(startTime[1], 'minutes')
+
+        var stopDate = null
+        if (this.stopTime) {
+          stopDate = moment(this.startTime).startOf('day')
+          var stopTime = this.stopTimeString.split(':')
+          stopDate.add(stopTime[0], 'hours')
+          stopDate.add(stopTime[1], 'minutes')
+        }
+
+        this.$emit('save', {
+          startTime: startDate.valueOf(),
+          stopTime: stopDate ? stopDate.valueOf() : null
+        })
       },
       close (ev) {
         if (ev.target === this.$el) {
@@ -71,6 +110,12 @@
 
     .card {
       cursor: auto;
+    }
+
+    .form-control {
+      width: 80px;
+      text-align: center;
+      display: inline-block;
     }
   }
 </style>
