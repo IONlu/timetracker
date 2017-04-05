@@ -14,7 +14,7 @@
     "postinstall": "npm run lint:fix && cd app && npm install"
   },
   "build": {
-    "productName": "ElectronVue",
+    "productName": "Time Tracker",
     "appId": "lu.ion.timetracker",
     "dmg": {
       "contents": [
@@ -37,10 +37,10 @@
       "package.json"
     ],
     "mac": {
-      "icon": "app/icons/icon.icns"
+      "icon": "app/icons/mac/icon.icns"
     },
     "win": {
-      "icon": "app/icons/icon.ico"
+      "icon": "app/icons/win/icon.ico"
     },
     "linux": {
       "target": [
