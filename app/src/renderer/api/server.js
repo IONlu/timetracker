@@ -1,9 +1,11 @@
 import Koa from 'koa'
 import KoaRouter from 'koa-router'
+import KoaCors from 'kcors'
 import store from '../vuex/store'
 
 const app = new Koa()
 const router = new KoaRouter()
+const cors = new KoaCors()
 
 router.get('/add/:text', ctx => {
   store.dispatch('createBreakpoint', {
@@ -17,6 +19,7 @@ router.get('/all', ctx => {
 })
 
 app
+  .use(cors)
   .use(router.routes())
   .use(router.allowedMethods())
 
