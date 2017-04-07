@@ -5,7 +5,7 @@ import moment from 'moment'
 export const APPLICATION_KEY = 'b8ff874e-ffe9-4338-9991-e73f58f73e66'
 
 const getEndpoint = () => {
-  return store.getters.setting('wisolServerUrl') + '/api/w_prestations'
+  return store.getters.setting('wisolServerUrl')
 }
 
 const getHeaders = () => {
