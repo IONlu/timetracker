@@ -1,17 +1,21 @@
 import { remote } from 'electron'
+const defaultMenu = require('electron-default-menu')
+const { app, shell } = remote
 
-const template = [
-  {
-    label: 'Edit',
-    submenu: [
-      {
-        label: 'Preferences',
-        click () {
-          window.location.href = '#/settings'
-        }
+// Get template for default menu
+const menu = defaultMenu(app, shell)
+
+// Add custom menu
+menu.splice(4, 0, {
+  label: 'Time Tracker',
+  submenu: [
+    {
+      label: 'Preferences',
+      click () {
+        window.location.href = '#/settings'
       }
-    ]
-  }
-]
+    }
+  ]
+})
 
-export default remote.Menu.buildFromTemplate(template)
+export default remote.Menu.buildFromTemplate(menu)
