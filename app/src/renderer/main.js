@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Electron from 'vue-electron'
 import Router from 'vue-router'
-import ApiServer from './api/server'
+import './api/server'
 
 import App from './App'
 import routes from './routes'
@@ -20,5 +20,3 @@ new Vue({
   router,
   ...App
 }).$mount('#app')
-
-ApiServer.listen(5000)

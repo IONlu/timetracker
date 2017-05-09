@@ -11,7 +11,13 @@
           <div class="form-group row" v-for="field in activeTab.fields">
             <label class="col-sm-4 col-form-label">{{ field.label }}</label>
             <div class="col-sm-8">
+              <textarea
+                v-if="field.type == 'textarea'"
+                class="form-control"
+                @input="updateSetting(field.name, $event.target.value)"
+              >{{ setting(field.name) }}</textarea>
               <input
+                v-else
                 :type="field.type"
                 class="form-control"
                 :value="setting(field.name)"
@@ -90,6 +96,16 @@
                 label: 'Port',
                 name: 'apiPort',
                 type: 'text'
+              },
+              {
+                label: 'Key',
+                name: 'apiKey',
+                type: 'textarea'
+              },
+              {
+                label: 'Cert',
+                name: 'apiCert',
+                type: 'textarea'
               }
             ]
           }
