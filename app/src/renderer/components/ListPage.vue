@@ -90,7 +90,7 @@
     },
     methods: {
       create () {
-        if (!this.todayIsSelected) {
+        if (!this.todayIsSelected || !this.text) {
           return
         }
         this.$store.dispatch('createBreakpoint', {
