@@ -119,7 +119,9 @@
         this.isEditText = false
       },
       updateText (value) {
-        this.$emit('updateText', value)
+        if (value) {
+          this.$emit('updateText', value)
+        }
       },
       editTime () {
         if (this.isLocked) {
@@ -144,7 +146,7 @@
   @import "../../../scss/buttons";
 
   td {
-    vertical-align: middle;
+    vertical-align: middle !important;
   }
 
   td.text {
@@ -154,7 +156,6 @@
   td.time {
     background-color: $gray-600;
     color: #FFFFFF;
-    vertical-align: middle;
 
     height: 5em;
     padding: 0 $spacing;
@@ -164,7 +165,6 @@
   }
 
   td.action {
-    vertical-align: middle;
     padding: 0 $spacing;
     text-align: center;
   }
