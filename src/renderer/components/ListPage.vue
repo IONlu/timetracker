@@ -28,7 +28,7 @@
           @remove="remove(breakpoint)"
           @updateText="updateText(breakpoint, $event)"
           @updateTime="updateTime(breakpoint, $event)"
-          key="index"
+          :key="index"
         ></breakpoint>
       </table>
     </div>
