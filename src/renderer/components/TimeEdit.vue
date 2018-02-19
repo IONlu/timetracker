@@ -1,7 +1,7 @@
 <template>
   <div class="time-edit-component" @click.stop="close($event)">
     <div class="card">
-      <div class="card-block">
+      <div class="card-body">
         <p>
           <input
             class="form-control"
