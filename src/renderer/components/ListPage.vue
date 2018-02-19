@@ -68,7 +68,11 @@
         var nextDay = this.date.clone().add(1, 'days')
         return this.$store.getters.breakpoints
           .filter(breakpoint => moment(breakpoint.startTime).isBetween(this.date, nextDay, 'day', '[)'))
-          .reverse()
+          .sort((a, b) => {
+            if (a.startTime > b.startTime) return -1
+            if (a.startTime < b.startTime) return 1
+            return 0
+          })
       },
       total () {
         return this.breakpoints.reduce((a, b) => {
