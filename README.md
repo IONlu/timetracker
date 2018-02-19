@@ -1,4 +1,4 @@
-# timetracker2
+# timetracker
 
 > Worktime tracker with export to Wisol
 

@@ -19,7 +19,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "timetracker2",
+    "productName": "timetracker",
     "appId": "org.simulatedgreg.electron-vue",
     "directories": {
       "output": "build"
