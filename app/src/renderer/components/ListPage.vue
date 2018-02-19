@@ -178,12 +178,12 @@
   }
 
   footer {
-    background-color: $gray-lighter;
+    background-color: $gray-300;
     padding: 0.5em 0;
   }
 
   .date-selector {
-    background-color: $gray-lighter;
+    background-color: $gray-300;
     padding: 0.5em 0;
 
     .container-fluid {
@@ -193,7 +193,7 @@
 
       .next, .previous {
         font-size: 2em;
-        color:  $gray-light;
+        color:  $gray-600;
         cursor: pointer;
       }
     }

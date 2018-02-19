@@ -152,7 +152,7 @@
   }
 
   td.time {
-    background-color: $gray-light;
+    background-color: $gray-600;
     color: #FFFFFF;
     vertical-align: middle;
 
@@ -175,7 +175,7 @@
 
   .action {
     .remove-action {
-      @include circle-button($gray-light);
+      @include circle-button($gray-600);
     }
 
     .stop-action {
