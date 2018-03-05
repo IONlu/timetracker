@@ -33,13 +33,16 @@
       >{{ data.text }}</div>
     </td>
     <td class="action">
-      <span v-if="data.uploadStatus == 'success'" class="uploadStatus fa fa-check fa-2x"></span>
+      <span v-if="data.uploadStatus == 'success'" class="uploadStatus fa fa-check fa-2x check-action"></span>
       <span v-if="data.uploadStatus == 'pending'" class="uploadStatus fa fa-spinner fa-pulse fa-2x fa-fw"></span>
       <template v-if="!isLocked">
         <button v-if="isActive" @click="stop" class="stop-action">
           <span class="fa fa-stop"></span>
         </button>
-        <button v-else @click="remove" class="remove-action">
+        <button v-else @click="restart" class="start-action">
+          <span class="fa fa-play"></span>
+        </button>
+        <button v-if="isActive" @click="remove" class="remove-action">
           <span class="fa fa-trash"></span>
         </button>
       </template>
@@ -100,6 +103,10 @@
       stop () {
         this.$emit('stop')
       },
+      restart () {
+        this.$emit('restart')
+        this.active = this.isActive
+      },
       remove () {
         if (this.isLocked) {
           return
@@ -156,7 +163,7 @@
   td.time {
     background-color: $gray-600;
     color: #FFFFFF;
-
+    width: 10%;
     height: 5em;
     padding: 0 $spacing;
     text-align: center;
@@ -165,8 +172,8 @@
   }
 
   td.action {
-    padding: 0 $spacing;
-    text-align: center;
+    padding-top: 15px ;
+    display: flex;
   }
 
   tr.active > td.time {
@@ -177,9 +184,15 @@
     .remove-action {
       @include circle-button($gray-600);
     }
-
+    .check-action {
+      margin-left: 8px;
+    }
     .stop-action {
       @include circle-button(#900);
+      margin-right: 10px;
+    }
+    .start-action {
+      @include circle-button(#4caf50);
     }
   }
 

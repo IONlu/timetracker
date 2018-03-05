@@ -9,12 +9,23 @@
         </div>
       </div>
       <form @submit.prevent="create" class="new-breakpoint-form">
-        <div class="input-container">
-          <input ref="textInput" type="text" class="form-control" v-model="text" :disabled="!formIsActive" />
-        </div>
+          <autocomplete
+            :items="clients"
+            ref="textInput"
+            type="text"
+            :textsync.sync="text"
+            :disabled="!formIsActive"
+            class="input-container"
+            @inputtext="inputText($event)"
+          />
         <div class="submit-button-container">
           <button type="submit" class="submit-button">
             <span class="fa fa-plus"></span>
+          </button>
+          <button
+          @click="createTel"
+          class=" tel-button">
+            <span class="fa fa-phone"></span>
           </button>
         </div>
       </form>
@@ -25,6 +36,7 @@
           v-for="(breakpoint, index) in breakpoints"
           :data="breakpoint"
           @stop="stop(breakpoint)"
+          @restart="restart(breakpoint)"
           @remove="remove(breakpoint)"
           @updateText="updateText(breakpoint, $event)"
           @updateTime="updateTime(breakpoint, $event)"
@@ -49,16 +61,44 @@
   import Breakpoint from './Breakpoint'
   import moment from 'moment'
   import worktime from './mixins/worktime'
+  import autocomplete from './Autocomplete'
+  import axios from 'axios'
 
   export default {
     name: 'main-page',
     mixins: [ worktime ],
-    components: { Breakpoint },
+    components: {
+      Breakpoint,
+      autocomplete
+    },
     data () {
       return {
         text: '',
-        date: null
+        telephone: 'Telephone',
+        date: null,
+        clients: []
       }
+    },
+    beforeCreate () {
+      axios({
+        url: 'http://localhost:8080/api/view_timetracker_search/search',
+        method: 'post',
+        headers: {
+          'Wisol-Api-App-Key': 'b8ff874e-ffe9-4338-9991-e73f58f73e66',
+          'Wisol-Api-Device-Key': 'timetracker'
+        },
+        data: {
+          'where': {}
+        },
+        auth: {
+          username: 'iondev',
+          password: 'iondev123$$'
+        },
+        responseType: 'json'
+      })
+        .then((response) => {
+          this.clients = response.data
+        })
     },
     created () {
       this.date = this.today
@@ -101,13 +141,24 @@
           text: this.text
         })
         this.text = ''
-        this.$refs.textInput.focus()
+        this.$emit('inputtext', '')
+      },
+      createTel () {
+        this.$store.dispatch('createBreakpoint', {
+          text: this.telephone
+        })
+      },
+      inputText (value) {
+        this.text = value
       },
       stop (breakpoint) {
         this.$store.dispatch('stopBreakpoint', { breakpoint })
       },
       remove (breakpoint) {
         this.$store.dispatch('removeBreakpoint', { breakpoint })
+      },
+      restart (breakpoint) {
+        this.$store.dispatch('restartBreakpoint', { breakpoint })
       },
       todayIsSelected () {
         return this.date.isSame(this.today, 'day')
@@ -163,20 +214,17 @@
   .new-breakpoint-form {
     display: flex;
 
-    .input-container {
-      flex-grow: 1;
-      margin: 0 0 0 $spacing;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
     .submit-button-container {
-      margin: 0 $spacing;
+      margin-left: 10px;
+      margin-right: 10px;
+      display: flex;
 
       .submit-button {
         @include circle-button(#4caf50);
+      }
+      .tel-button {
+        @include circle-button(#4286f4);
+        margin-left: 10px;
       }
     }
   }
@@ -185,7 +233,6 @@
     background-color: $gray-300;
     padding: 0.5em 0;
   }
-
   .date-selector {
     background-color: $gray-300;
     padding: 0.5em 0;
@@ -194,7 +241,11 @@
       display: flex;
       line-height: 2em;
       justify-content: space-between;
-
+      .input-container {
+        flex-grow: 1;
+        margin: 0 0 0 $spacing;
+        justify-content: center;
+      }
       .next, .previous {
         font-size: 2em;
         color:  $gray-600;

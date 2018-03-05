@@ -36,6 +36,17 @@ export const stopBreakpoint = ({ commit }, data) => {
   })
 }
 
+export const restartBreakpoint = ({ commit, getters }, data) => {
+  if (getters.currentBreakPoint && !getters.currentBreakPoint.stopTime) {
+    commit(types.STOP_BREAKPOINT, {
+      breakpoint: getters.currentBreakPoint
+    })
+  }
+  commit(types.RESTART_BREAKPOINT, {
+    breakpoint: data.breakpoint
+  })
+}
+
 export const removeBreakpoint = ({ commit }, data) => {
   if (!data.breakpoint) {
     return

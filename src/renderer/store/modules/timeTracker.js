@@ -14,6 +14,9 @@ const mutations = {
   [types.STOP_BREAKPOINT] (state, data) {
     data.breakpoint.stopTime = Date.now()
   },
+  [types.RESTART_BREAKPOINT] (state, data) {
+    data.breakpoint.stopTime = null
+  },
   [types.CREATE_BREAKPOINT] (state, data) {
     state.breakpoints.push({
       startTime: Date.now(),
