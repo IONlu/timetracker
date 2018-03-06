@@ -179,7 +179,6 @@ a {
 }
 .autocomplete-results{
   flex-grow: 1;
-  margin: 0 0 0 $spacing;
   width: 88%;
   overflow: auto;
   height: 193px;
