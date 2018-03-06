@@ -45,6 +45,7 @@
 
 <script>
   export default {
+    name: 'settings',
     data () {
       return {
         activeTab: null,
@@ -64,7 +65,17 @@
             fields: [
               {
                 label: 'Server Url',
+                name: 'wisolHTTPUrl',
+                type: 'text'
+              },
+              {
+                label: 'Event Table',
                 name: 'wisolServerUrl',
+                type: 'text'
+              },
+              {
+                label: 'Search Table',
+                name: 'wisolClientServerUrl',
                 type: 'text'
               },
               {

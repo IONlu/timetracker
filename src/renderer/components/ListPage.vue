@@ -63,6 +63,7 @@
   import worktime from './mixins/worktime'
   import autocomplete from './Autocomplete'
   import axios from 'axios'
+  import store from '../store'
 
   export default {
     name: 'main-page',
@@ -81,18 +82,18 @@
     },
     beforeCreate () {
       axios({
-        url: 'http://localhost:8080/api/view_timetracker_search/search',
+        url: store.getters.setting('wisolHTTPUrl') + '/api/' + store.getters.setting('wisolClientServerUrl') + '/search',
         method: 'post',
         headers: {
           'Wisol-Api-App-Key': 'b8ff874e-ffe9-4338-9991-e73f58f73e66',
-          'Wisol-Api-Device-Key': 'timetracker'
+          'Wisol-Api-Device-Key': store.getters.setting('wisolDeviceKey')
         },
         data: {
           'where': {}
         },
         auth: {
-          username: 'iondev',
-          password: 'iondev123$$'
+          username: store.getters.setting('wisolUsername'),
+          password: store.getters.setting('wisolPassword')
         },
         responseType: 'json'
       })
@@ -142,6 +143,7 @@
         })
         this.text = ''
         this.$emit('inputtext', '')
+        console.log('this is the url: ' + this.url)
       },
       createTel () {
         this.$store.dispatch('createBreakpoint', {

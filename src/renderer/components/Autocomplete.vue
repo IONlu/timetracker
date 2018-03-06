@@ -166,36 +166,42 @@ a {
 
 .autocomplete {
   position: relative;
-  width: 200px;
+  width: auto;
+  height: auto;
 }
 
-.autocomplete-results {
-  padding: 0;
-  margin: 0;
-  border: 1px solid #eeeeee;
-  height: 200px;
-  overflow: auto;
-  width: 450px;
-}
-.input-container {
-  flex-grow: 1;
-  margin: 0 0 0 $spacing;
+.input-container{
   width: 100%;
+  height: 45px;
   align-items: center;
+  background-color: white;
   justify-content: center;
 }
-
+.autocomplete-results{
+  flex-grow: 1;
+  margin: 0 0 0 $spacing;
+  width: 88%;
+  overflow: auto;
+  height: 193px;
+  align-items: center;
+  position: fixed;
+  background-color: white;
+  justify-content: center;
+}
+::-webkit-scrollbar {
+    display: none;
+}
 .autocomplete-result {
   text-align: left;
   padding: 4px 10px;
   cursor: pointer;
-  width: 450px;
+  width: 100%;
 }
 
 .autocomplete-result.is-active,
 .autocomplete-result:hover {
   background-color: #4aae9b;
-  width: 450px;
+  width: 95%;
   color: white;
 }
 
