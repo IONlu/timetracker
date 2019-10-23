@@ -1,9 +1,22 @@
 <template>
     <v-app>
-        <v-app-bar app>
+        <v-navigation-drawer
+            app
+            clipped
+            v-model="drawer"
+        >
+            <!-- -->
+        </v-navigation-drawer>
+
+        <v-app-bar
+            app
+            clipped-left
+            color="indigo darken-4"
+            dark
+        >
+            <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title class="headline text-uppercase">
-                <span>Vuetify</span>
-                <span class="font-weight-light">MATERIAL DESIGN</span>
+                <span>Timetracker</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn
@@ -25,12 +38,14 @@
 import HelloWorld from './components/HelloWorld'
 
 export default {
-    name: 'App',
     components: {
         HelloWorld
     },
-    data: () => ({
-    //
-    })
+
+    data () {
+        return {
+            drawer: false
+        }
+    }
 }
 </script>
