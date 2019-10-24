@@ -4,7 +4,7 @@ const express = require('express')
 const api = require('./api.js')
 
 const app = express()
-const port = 3000
+const port = process.env.SERVER_PORT
 
 app.use('/api', api)
 app.use(express.static(__dirname + '/../node_modules/@ionlu/timetracker-client/dist'))
