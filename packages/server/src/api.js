@@ -15,7 +15,7 @@ const router = express.Router()
 router.use(nocache())
 
 router.get('/time_entries', (req, res) => {
-    api.get('/time_entries.json')
+    api.get('/time_entries.json?limit=100')
         .then(result => res.json(result))
 })
 
